@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${flight.id != null ? 'Edit Flight | SkyBook' : 'New Flight | SkyBook'}">Flight Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}"><i class="bi bi-airplane-fill me-2"></i>SkyBook</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/flights}">Flights</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/bookings}">Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/passengers}">Passengers</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0" th:text="${flight.id != null ? 'Edit Flight' : 'Add New Flight'}">Flight Form</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/flights/save}" method="post">
+                            <input type="hidden" th:value="${flight.id}" name="id">
+
+                            <div class="mb-3">
+                                <label class="form-label">Flight Number</label>
+                                <input type="text" class="form-control" name="flightNumber" th:value="${flight.flightNumber}" placeholder="e.g. BA-2490" required>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Origin Airport</label>
+                                    <select name="originId" class="form-select" required>
+                                        <option value="">Select origin...</option>
+                                        <option th:each="airport : ${airports}" th:value="${airport.id}" th:text="${airport.code + ' - ' + airport.name}" th:selected="${flight.origin != null and flight.origin.id == airport.id}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Destination Airport</label>
+                                    <select name="destinationId" class="form-select" required>
+                                        <option value="">Select destination...</option>
+                                        <option th:each="airport : ${airports}" th:value="${airport.id}" th:text="${airport.code + ' - ' + airport.name}" th:selected="${flight.destination != null and flight.destination.id == airport.id}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Departure Time</label>
+                                    <input type="datetime-local" class="form-control" name="departureTime" th:value="${flight.departureTime}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Arrival Time</label>
+                                    <input type="datetime-local" class="form-control" name="arrivalTime" th:value="${flight.arrivalTime}" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Price ($)</label>
+                                    <input type="number" step="0.01" class="form-control" name="price" th:value="${flight.price}" placeholder="0.00" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Available Seats</label>
+                                    <input type="number" class="form-control" name="availableSeats" th:value="${flight.availableSeats}" placeholder="0" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Status</label>
+                                    <select name="status" class="form-select">
+                                        <option value="SCHEDULED" th:selected="${flight.status == 'SCHEDULED'}">Scheduled</option>
+                                        <option value="DEPARTED" th:selected="${flight.status == 'DEPARTED'}">Departed</option>
+                                        <option value="ARRIVED" th:selected="${flight.status == 'ARRIVED'}">Arrived</option>
+                                        <option value="CANCELLED" th:selected="${flight.status == 'CANCELLED'}">Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>Save Flight</button>
+                                <a th:href="@{/flights}" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-5"><div class="container text-center"><p class="mb-1"><i class="bi bi-airplane-fill me-2"></i>SkyBook</p><p class="text-muted small mb-0">&copy; 2026</p></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

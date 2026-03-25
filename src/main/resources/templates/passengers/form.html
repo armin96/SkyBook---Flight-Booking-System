@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${passenger.id != null ? 'Edit Passenger | SkyBook' : 'New Passenger | SkyBook'}">Passenger Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}"><i class="bi bi-airplane-fill me-2"></i>SkyBook</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/flights}">Flights</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/bookings}">Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/passengers}">Passengers</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0" th:text="${passenger.id != null ? 'Edit Passenger' : 'Add New Passenger'}">Form</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/passengers/save}" method="post">
+                            <input type="hidden" th:value="${passenger.id}" name="id">
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" name="firstName" th:value="${passenger.firstName}" placeholder="John" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" name="lastName" th:value="${passenger.lastName}" placeholder="Smith" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" th:value="${passenger.email}" placeholder="john@email.com" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-control" name="phone" th:value="${passenger.phone}" placeholder="+44-7700-123456">
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Passport Number</label>
+                                <input type="text" class="form-control" name="passportNumber" th:value="${passenger.passportNumber}" placeholder="GB123456789" required>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>Save</button>
+                                <a th:href="@{/passengers}" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-5"><div class="container text-center"><p class="mb-1"><i class="bi bi-airplane-fill me-2"></i>SkyBook</p><p class="text-muted small mb-0">&copy; 2026</p></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

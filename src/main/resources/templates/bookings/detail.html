@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Details | SkyBook</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}"><i class="bi bi-airplane-fill me-2"></i>SkyBook</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/flights}">Flights</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/bookings}">Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/passengers}">Passengers</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show"><i class="bi bi-check-circle-fill me-2"></i><span th:text="${success}"></span><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show"><i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${error}"></span><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+    </div>
+
+    <main class="container my-4">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/bookings}">Bookings</a></li>
+                <li class="breadcrumb-item active">Booking Details</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Booking Info -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-journal-check me-2"></i>Booking Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <tr><th>Booking ID:</th><td th:text="${booking.id}">ID</td></tr>
+                            <tr><th>Status:</th><td><span class="badge fs-6" th:classappend="${booking.status == 'CONFIRMED' ? 'bg-success' : 'bg-danger'}" th:text="${booking.status}">CONFIRMED</span></td></tr>
+                            <tr><th>Seat Class:</th><td th:text="${booking.seatClass}">ECONOMY</td></tr>
+                            <tr><th>Total Price:</th><td class="fs-5 text-success fw-bold">$<span th:text="${#numbers.formatDecimal(booking.totalPrice, 1, 2)}">0.00</span></td></tr>
+                            <tr><th>Booking Date:</th><td th:text="${#temporals.format(booking.bookingDate, 'dd MMM yyyy HH:mm')}">01 Jan</td></tr>
+                        </table>
+                        <div class="d-flex gap-2">
+                            <a th:href="@{/bookings/{id}/cancel(id=${booking.id})}" class="btn btn-warning" th:if="${booking.status == 'CONFIRMED'}" onclick="return confirm('Cancel this booking?')"><i class="bi bi-x-lg me-1"></i>Cancel Booking</a>
+                            <a th:href="@{/bookings}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passenger & Flight Info -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="bi bi-person-fill me-2"></i>Passenger</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <tr><th>Name:</th><td th:text="${booking.passenger.fullName}">John Smith</td></tr>
+                            <tr><th>Email:</th><td th:text="${booking.passenger.email}">email</td></tr>
+                            <tr><th>Phone:</th><td th:text="${booking.passenger.phone}">phone</td></tr>
+                            <tr><th>Passport:</th><td th:text="${booking.passenger.passportNumber}">passport</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-airplane me-2"></i>Flight</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <tr><th>Flight:</th><td th:text="${booking.flight.flightNumber}">BA-001</td></tr>
+                            <tr><th>Route:</th><td><span th:text="${booking.flight.origin.code}">LHR</span> → <span th:text="${booking.flight.destination.code}">JFK</span></td></tr>
+                            <tr><th>Departure:</th><td th:text="${#temporals.format(booking.flight.departureTime, 'dd MMM yyyy HH:mm')}">01 Jan</td></tr>
+                            <tr><th>Duration:</th><td th:text="${booking.flight.duration}">2h 30m</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-5"><div class="container text-center"><p class="mb-1"><i class="bi bi-airplane-fill me-2"></i>SkyBook</p><p class="text-muted small mb-0">&copy; 2026</p></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

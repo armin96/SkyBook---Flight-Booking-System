@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passenger Details | SkyBook</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}"><i class="bi bi-airplane-fill me-2"></i>SkyBook</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/flights}">Flights</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/bookings}">Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/passengers}">Passengers</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/passengers}">Passengers</a></li>
+                <li class="breadcrumb-item active" th:text="${passenger.fullName}">John</li>
+            </ol>
+        </nav>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-person-fill me-2"></i>Passenger Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-circle display-1 text-primary"></i>
+                            <h3 class="mt-2" th:text="${passenger.fullName}">John Smith</h3>
+                        </div>
+                        <table class="table table-borderless">
+                            <tr><th><i class="bi bi-envelope me-2"></i>Email:</th><td th:text="${passenger.email}">email</td></tr>
+                            <tr><th><i class="bi bi-telephone me-2"></i>Phone:</th><td th:text="${passenger.phone}">phone</td></tr>
+                            <tr><th><i class="bi bi-passport me-2"></i>Passport:</th><td><code th:text="${passenger.passportNumber}">passport</code></td></tr>
+                        </table>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a th:href="@{/passengers/{id}/edit(id=${passenger.id})}" class="btn btn-warning"><i class="bi bi-pencil me-1"></i>Edit</a>
+                            <a th:href="@{/passengers}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-5"><div class="container text-center"><p class="mb-1"><i class="bi bi-airplane-fill me-2"></i>SkyBook</p><p class="text-muted small mb-0">&copy; 2026</p></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
