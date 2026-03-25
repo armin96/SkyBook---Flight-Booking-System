@@ -1,8 +1,7 @@
 # SkyBook-Flight-Booking-System
-
+Name : Seyedarmin Hosseinilargani<br>
+Student ID: GH1042143<br><br>
  Flight booking management system built with Java Spring Boot and MongoDB.
-
-##  Tech Stack
 
 
 ## Features
@@ -11,9 +10,9 @@
 - **Flight Search** — Search flights by origin and destination
 - **Booking System** — Book flights with Economy, Business, or First Class
 - **Seat Management** — Automatic seat tracking (decrement on book, restore on cancel)
-- **REST API** — JSON endpoints under `/api/` for all entities
+- **REST API** — JSON endpoints under /api/ for all entities
 - **Web UI** — Beautiful responsive dashboard with Bootstrap 5
-- **Error Handling** — Global `@ControllerAdvice` with custom exceptions and error pages
+- **Error Handling** — Global @ControllerAdvice with custom exceptions and error pages
 - **Sample Data** — Pre-loaded airports, flights, and passengers
 
 ##  Getting Started
